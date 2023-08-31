@@ -1,10 +1,12 @@
 /* eslint-disable */ 
 import React, { useState } from 'react';
-import { Link, Router, Route, BrowserRouter, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import VocaUpdate from './VocaUpdate';
 
 
 const VocaListItem = ({ voca, dispatch }) => {
+
+  const navigate = useNavigate();
 
   const [editMode, setEditMode] = useState(false)
   const { id, word, pronunciation, definition, exampleEn, exampleKo } = voca;
@@ -17,7 +19,7 @@ const VocaListItem = ({ voca, dispatch }) => {
     }
   } 
   return (
-    <article>
+    <article >
       {!editMode ? (
         <>
           <div>
@@ -25,6 +27,7 @@ const VocaListItem = ({ voca, dispatch }) => {
             <button onClick={() => setEditMode(true)}>수정하기</button>
           <button onClick={() => remove()}>삭제</button>
         </div>
+        <div onClick={()=> navigate(`/detail/${id}`)}>
         <div>
           <h4>{word}</h4>
           <span>{pronunciation}</span>
@@ -32,6 +35,7 @@ const VocaListItem = ({ voca, dispatch }) => {
         <p>{definition}</p>
         <div>{exampleEn}</div>
         <div>{exampleKo}</div>
+        </div>
         </>
       ):(
         <VocaUpdate voca={voca} dispatch={dispatch} setEditMode={setEditMode}/>
